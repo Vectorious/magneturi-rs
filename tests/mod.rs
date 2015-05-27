@@ -16,15 +16,15 @@ fn test_mediawiki() {
     let magnet = MagnetUri::parse(uri).ok().unwrap();
     let res = magnet.resources().ok().unwrap()[0].clone();
 
-    assert_eq!(res.xt[0], "urn:ed2k:354B15E68FB8F36D7CD88FF94116CDC1");
-    assert_eq!(res.xt[1], "urn:tree:tiger:7N5OAMRNGMSSEUE3ORHOKWN4WWIQ5X4EBOOTLJY");
-    assert_eq!(res.xt[2], "urn:btih:QHQXPYWMACKDWKP47RRVIV7VOURXFE5Q");
-    assert_eq!(res.xl, Some(10826029));
-    assert_eq!(res.dn, Some("mediawiki-1.15.1.tar.gz".to_owned()));
-    assert_eq!(res.tr[0], "udp://tracker.openbittorrent.com:80/announce");
-    assert_eq!(res.as_[0], "http://download.wikimedia.org/mediawiki/1.15/mediawiki-1.15.1.tar.gz");
-    assert_eq!(res.xs[0], "http://cache.example.org/XRX2PEFXOOEJFRVUCX6HMZMKS5TWG4K5");
-    assert_eq!(res.xs[1], "dchub://example.org");
+    assert_eq!(res.hashes[0], "urn:ed2k:354B15E68FB8F36D7CD88FF94116CDC1");
+    assert_eq!(res.hashes[1], "urn:tree:tiger:7N5OAMRNGMSSEUE3ORHOKWN4WWIQ5X4EBOOTLJY");
+    assert_eq!(res.hashes[2], "urn:btih:QHQXPYWMACKDWKP47RRVIV7VOURXFE5Q");
+    assert_eq!(res.size, Some(10826029));
+    assert_eq!(res.name, Some("mediawiki-1.15.1.tar.gz".to_owned()));
+    assert_eq!(res.trackers[0], "udp://tracker.openbittorrent.com:80/announce");
+    assert_eq!(res.web_sources[0], "http://download.wikimedia.org/mediawiki/1.15/mediawiki-1.15.1.tar.gz");
+    assert_eq!(res.p2p_sources[0], "http://cache.example.org/XRX2PEFXOOEJFRVUCX6HMZMKS5TWG4K5");
+    assert_eq!(res.p2p_sources[1], "dchub://example.org");
 }
 
 #[test]

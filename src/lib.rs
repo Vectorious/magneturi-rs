@@ -56,7 +56,7 @@ impl MagnetUri {
 
             // Resize resource vec to group number so we can add current resource.
             while res_vec.len() <= group {
-                res_vec.push(Resource{ ..Default::default() });
+                res_vec.push(Resource::default());
             }
 
             let res = res_vec.get_mut(group).unwrap();
@@ -64,14 +64,14 @@ impl MagnetUri {
             let val = value.to_owned();
 
             match parameter.param_type {
-                ParameterType::DN   => res.dn = Some(val),
-                ParameterType::XL   => res.xl = Some(val.parse().unwrap()),
-                ParameterType::XT   => res.xt.push(val),
-                ParameterType::AS   => res.as_.push(val),
-                ParameterType::XS   => res.xs.push(val),
-                ParameterType::KT   => res.kt.push(val),
-                ParameterType::MT   => res.mt.push(val),
-                ParameterType::TR   => res.tr.push(val),
+                ParameterType::DN   => res.name = Some(val),
+                ParameterType::XL   => res.size = Some(val.parse().unwrap()),
+                ParameterType::XT   => res.hashes.push(val),
+                ParameterType::AS   => res.web_sources.push(val),
+                ParameterType::XS   => res.p2p_sources.push(val),
+                ParameterType::KT   => res.keywords.push(val),
+                ParameterType::MT   => res.manifests.push(val),
+                ParameterType::TR   => res.trackers.push(val),
                 ParameterType::X(s) => res.supplement.push((s, val))
             }
         }
@@ -125,15 +125,15 @@ enum ParameterType {
 
 #[derive(Clone, Default, Debug)]
 pub struct Resource {
-    pub dn: Option<String>,     // Filename
-    pub xl: Option<usize>,      // Size in bytes
-    pub xt: Vec<String>,        // URN containing hash
-    pub as_: Vec<String>,       // Acceptable source: Web link
-    pub xs: Vec<String>,        // Exact source: P2P link
-    pub kt: Vec<String>,        // Keywords
-    pub mt: Vec<String>,        // Link to metafile: http://rakjar.de/gnuticles/MAGMA-Specsv22.txt
-    pub tr: Vec<String>,        // Tracker URL for BitTorrent
-    pub supplement: Vec<(String, String)>
+    pub name: Option<String>,               // Filename
+    pub size: Option<usize>,                // Size in bytes
+    pub hashes: Vec<String>,                // URN containing hash
+    pub web_sources: Vec<String>,           // Acceptable source: Web link
+    pub p2p_sources: Vec<String>,           // Exact source: P2P link
+    pub keywords: Vec<String>,              // Keywords
+    pub manifests: Vec<String>,             // Link to metafile: http://rakjar.de/gnuticles/MAGMA-Specsv22.txt
+    pub trackers: Vec<String>,              // Tracker URL for BitTorrent
+    pub supplement: Vec<(String, String)>   // Alternative parameters
 }
 
 #[derive(Debug, PartialEq)]
